@@ -23,11 +23,14 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
-# Initialize Qt resources from file resources.py
-import resources_rc
-# Import the code for the dialog
-from gestorhabitatdialog import GestorHabitatDialog
 
+# Initialize Qt resources from file resources.py
+import resources
+# Import the code for the dialog
+#from gestorhabitatdialog import GestorHabitatDialog
+
+# Import my plugin tools
+from gestorhabitattools import *
 
 class GestorHabitat:
 
@@ -36,48 +39,77 @@ class GestorHabitat:
         self.iface = iface
         # initialize plugin directory
         self.plugin_dir = QFileInfo(QgsApplication.qgisUserDbFilePath()).path() + "/python/plugins/gestorhabitat"
-        # initialize locale
-        localePath = ""
-        locale = QSettings().value("locale/userLocale").toString()[0:2]
-
-        if QFileInfo(self.plugin_dir).exists():
-            localePath = self.plugin_dir + "/i18n/gestorhabitat_" + locale + ".qm"
-
-        if QFileInfo(localePath).exists():
-            self.translator = QTranslator()
-            self.translator.load(localePath)
-
-            if qVersion() > '4.3.3':
-                QCoreApplication.installTranslator(self.translator)
-
-        # Create the dialog (after translation) and keep reference
-        self.dlg = GestorHabitatDialog()
 
     def initGui(self):
-        # Create action that will start plugin configuration
-        self.action = QAction(
-            QIcon(":/plugins/gestorhabitat/icon.png"),
-            u"Gestor de habitats", self.iface.mainWindow())
-        # connect the action to the run method
-        QObject.connect(self.action, SIGNAL("triggered()"), self.run)
+        # Add Toolbar
+        self.toolbar = self.iface.addToolBar("Gestor de Habitat")
+        self.toolbar.setObjectName("GestorHabitat")
+        
+        # Add actions to Toolbar
+        self.btadicionaracao = QAction(QIcon(":/plugins/GestorHabitat/icons/adicionaracoes.png"), u"Adicionar ações", self.iface.mainWindow())
+        self.toolbar.addActions([self.btadicionaracao])
+        
+        self.btadicionaracao.setCheckable(True)
+        self.btadicionaracao.setEnabled(True)
+        
+        # self.tooBar.addSeparator() #<-- para colocar um separador na toolbar
+        
+        # Connect to signals for button behavior
+        QObject.connect(self.btadicionaracao, SIGNAL("activated()"), self.adicionaracao)
+        
+        
+        ### connect the action to the run method
+        ###QObject.connect(self.action, SIGNAL("triggered()"), self.run)
 
         # Add toolbar button and menu item
-        self.iface.addToolBarIcon(self.action)
-        self.iface.addPluginToMenu(u"&Gestor de habitat", self.action)
-
+        self.iface.addPluginToMenu(u"&Gestor de Habitat", self.btadicionaracao)
+        
     def unload(self):
         # Remove the plugin menu item and icon
-        self.iface.removePluginMenu(u"&Gestor de habitat", self.action)
-        self.iface.removeToolBarIcon(self.action)
+        self.toolbar.removeAction(self.btadicionaracao)
+        del self.toolbar
 
-    # run method that performs all the real work
-    def run(self):
-        # show the dialog
-        self.dlg.show()
-        # Run the dialog event loop
-        result = self.dlg.exec_()
-        # See if OK was pressed
-        if result == 1:
-            # do something useful (delete the line containing pass and
-            # substitute with your code)
+    
+    # Method that creates new accoes (RUN)
+    def adicionaracao(self):
+        # Define "acções" and "unidades de gestão" Layers from project
+        l_acao = QgsMapLayerRegistry.instance().mapLayer(u'acoes20130312143950563')
+        l_uni_ges = QgsMapLayerRegistry.instance().mapLayer(u'unidadesdegestao20130312143304288')
+        
+        # Get layer default values from provider
+        # (this avoids problems with unique keys)
+        provider = l_acao.dataProvider()
+        temp_feature = QgsFeature()
+        attributes = {}
+
+        for j in l_acao.pendingAllAttributesList():
+            if not provider.defaultValue(j).isNull():
+                attributes[j] = provider.defaultValue(j)
+            else:
+                attributes[j] = None
+
+        temp_feature.setAttributeMap(attributes)
+
+        # open feature form and waits for edits
+        if self.iface.openFeatureForm(l_acao, temp_feature):
+            
+            # start edit command to allow undo\redo
+            l_acao.beginEditCommand("Add new actions")
+            
+            new_attributes = temp_feature.attributeMap()
+            
+            # replicate "acção" record for each
+            # of the selected "Unidades de gestão"
+            uniges_ids = [feature.attributeMap()[1] for feature in l_uni_ges.selectedFeatures()]
+
+            for uniges_id in uniges_ids:
+                new_attributes[1] = uniges_id
+                temp_feature.setAttributeMap(new_attributes)
+                new_feature = QgsFeature(temp_feature)
+                l_acao.addFeature( new_feature )
+
+            l_acao.endEditCommand()
+        else:
             pass
+            # print "Cancelled"
+            # l_acao.destroyEditCommand()

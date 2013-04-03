@@ -27,7 +27,7 @@ def name():
 
 
 def description():
-    return "Ferramentas para gestão de habitats"
+    return u"Ferramentas para gestão de habitats"
 
 
 def version():
@@ -48,6 +48,6 @@ def email():
     return "alexandre.neto@cascaisambiente"
 
 def classFactory(iface):
-    # load GestorHabitat class from file GestorHabitat
+    # load GestorHabitat class from file GestorHabitat.py
     from gestorhabitat import GestorHabitat
     return GestorHabitat(iface)

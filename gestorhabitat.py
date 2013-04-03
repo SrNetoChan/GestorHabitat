@@ -38,7 +38,7 @@ class GestorHabitat:
         # Save reference to the QGIS interface
         self.iface = iface
         # initialize plugin directory
-        self.plugin_dir = QFileInfo(QgsApplication.qgisUserDbFilePath()).path() + "/python/plugins/gestorhabitat"
+        self.plugin_dir = QFileInfo(QgsApplication.qgisUserDbFilePath()).path() + "/python/plugins/GestorHabitat"
 
     def initGui(self):
         # Add Toolbar

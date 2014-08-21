@@ -23,7 +23,7 @@ PLUGIN_UPLOAD = $(CURDIR)/plugin_upload.py
 # Makefile for a PyQGIS plugin 
 
 # translation
-SOURCES = gestorhabitat.py __init__.py
+SOURCES = pghptools.py __init__.py
 #TRANSLATIONS = i18n/gestorhabitat_en.ts
 #TRANSLATIONS =
 

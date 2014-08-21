@@ -8,9 +8,9 @@
 # Mandatory items:
 
 [general]
-name=Gestor de habitat
+name=Ferramentas PGHP
 qgisMinimumVersion=2.2
-description=Ferramentas para gestão de habitats e paisagem
+description=Ferramentas para plano de gestão de habitats e paisagem
 version=0.1
 author=Alexandre Neto - Cascais Ambiente
 email=alexandre.neto@cascaisambiente

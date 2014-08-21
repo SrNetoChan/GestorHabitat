@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- GestorHabitat
-                                 A QGIS plugin
- Ferramentas para gestão de habitats
-                             -------------------
+                                 Ferramentas PGHP
+                                 Um plugin QGIS
+            Ferramentas para o Plano de Gestão de Habitats e Paisagem
+                              -------------------
         begin                : 2013-04-03
         copyright            : (C) 2013 by Alexandre Neto - Cascais Ambiente
         email                : alexandre.neto@cascaisambiente
@@ -18,10 +18,9 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
- This script initializes the plugin, making it known to QGIS.
 """
 
 def classFactory(iface):
     # load GestorHabitat class from file GestorHabitat.py
-    from gestorhabitat import GestorHabitat
-    return GestorHabitat(iface)
+    from pghptools import PghpTools
+    return PghpTools(iface)

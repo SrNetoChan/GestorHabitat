@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- GestorHabitat
-                                 A QGIS plugin
-                        Ferramentas para gestão de habitats
+                                 Ferramentas PGHP
+                                 Um plugin QGIS
+            Ferramentas para o Plano de Gestão de Habitats e Paisagem
                               -------------------
         begin                : 2013-04-03
         copyright            : (C) 2013 by Alexandre Neto - Cascais Ambiente
@@ -32,7 +32,7 @@ import resources_rc
 # Import my plugin tools
 from gestorhabitattools import *
 
-class GestorHabitat:
+class PghpTools:
 
     def __init__(self, iface):
         # Save reference to the QGIS interface
@@ -46,8 +46,8 @@ class GestorHabitat:
 
     def initGui(self):
         # Add Toolbar
-        self.toolbar = self.iface.addToolBar("Gestor de Habitat")
-        self.toolbar.setObjectName("GestorHabitat")
+        self.toolbar = self.iface.addToolBar("PGHP")
+        self.toolbar.setObjectName("PGHPtoolbar")
         
         # Add actions to Toolbar
         self.btadicionaracao = QAction(QIcon(":/plugins/GestorHabitat/icons/adicionaracoes.png"),
@@ -66,7 +66,7 @@ class GestorHabitat:
         ###QObject.connect(self.action, SIGNAL("triggered()"), self.run)
 
         # Add toolbar button and menu item
-        self.iface.addPluginToMenu(u"&Gestor de Habitat", self.btadicionaracao)
+        self.iface.addPluginToMenu(u"&PGHP", self.btadicionaracao)
         
     def unload(self):
         # Remove the plugin menu item and icon

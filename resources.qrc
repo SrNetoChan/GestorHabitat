@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/plugins/GestorHabitat" >
+        <file>icon.png</file>
         <file>icons/icon.png</file>
         <file>icons/adicionaracoes.png</file>
     </qresource>

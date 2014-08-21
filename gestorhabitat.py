@@ -25,7 +25,7 @@ from PyQt4.QtGui import *
 from qgis.core import *
 
 # Initialize Qt resources from file resources.py
-# import resources
+import resources_rc
 # Import the code for the dialog
 # from gestorhabitatdialog import GestorHabitatDialog
 

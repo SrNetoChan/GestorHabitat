@@ -21,32 +21,6 @@
  This script initializes the plugin, making it known to QGIS.
 """
 
-
-def name():
-    return "Gestor de habitat"
-
-
-def description():
-    return u"Ferramentas para gestão de habitats"
-
-
-def version():
-    return "Version 0.1"
-
-
-def icon():
-    return "icon.png"
-
-
-def qgisMinimumVersion():
-    return "1.8"
-
-def author():
-    return "Alexandre Neto - Cascais Ambiente"
-
-def email():
-    return "alexandre.neto@cascaisambiente"
-
 def classFactory(iface):
     # load GestorHabitat class from file GestorHabitat.py
     from gestorhabitat import GestorHabitat

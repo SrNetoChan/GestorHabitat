@@ -7,11 +7,10 @@
 
 # Mandatory items:
 
-
 [general]
 name=Gestor de habitat
-qgisMinimumVersion=1.8
-description=Ferramentas para gestão de habitats
+qgisMinimumVersion=2.2
+description=Ferramentas para gestão de habitats e paisagem
 version=0.1
 author=Alexandre Neto - Cascais Ambiente
 email=alexandre.neto@cascaisambiente
@@ -29,7 +28,7 @@ tags=
 homepage=
 tracker=
 repository=https://github.com/SrNetoChan/GestorHabitat.git
-icon=icon.png
+icon=icons/adicionaracoes.png
 # experimental flag
 experimental=True
 

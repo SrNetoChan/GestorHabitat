@@ -3,7 +3,7 @@
 /***************************************************************************
  GestorHabitat
                                  A QGIS plugin
- Ferramentas para gestão de habitats
+                        Ferramentas para gestão de habitats
                               -------------------
         begin                : 2013-04-03
         copyright            : (C) 2013 by Alexandre Neto - Cascais Ambiente
@@ -25,9 +25,9 @@ from PyQt4.QtGui import *
 from qgis.core import *
 
 # Initialize Qt resources from file resources.py
-import resources
+# import resources
 # Import the code for the dialog
-#from gestorhabitatdialog import GestorHabitatDialog
+# from gestorhabitatdialog import GestorHabitatDialog
 
 # Import my plugin tools
 from gestorhabitattools import *
@@ -37,8 +37,12 @@ class GestorHabitat:
     def __init__(self, iface):
         # Save reference to the QGIS interface
         self.iface = iface
+
         # initialize plugin directory
         self.plugin_dir = QFileInfo(QgsApplication.qgisUserDbFilePath()).path() + "/python/plugins/GestorHabitat"
+
+        # defining global variables
+        self.mc = self.iface.mapCanvas()
 
     def initGui(self):
         # Add Toolbar
@@ -46,7 +50,8 @@ class GestorHabitat:
         self.toolbar.setObjectName("GestorHabitat")
         
         # Add actions to Toolbar
-        self.btadicionaracao = QAction(QIcon(":/plugins/GestorHabitat/icons/adicionaracoes.png"), u"Adicionar ações", self.iface.mainWindow())
+        self.btadicionaracao = QAction(QIcon(":/plugins/GestorHabitat/icons/adicionaracoes.png"),
+                                       u"Adicionar ações", self.iface.mainWindow())
         self.toolbar.addActions([self.btadicionaracao])
         
         self.btadicionaracao.setCheckable(True)
@@ -55,9 +60,8 @@ class GestorHabitat:
         # self.tooBar.addSeparator() #<-- para colocar um separador na toolbar
         
         # Connect to signals for button behavior
-        QObject.connect(self.btadicionaracao, SIGNAL("activated()"), self.adicionaracao)
-        
-        
+        QObject.connect(self.btadicionaracao, SIGNAL("triggered()"), self.adicionaracao)
+
         ### connect the action to the run method
         ###QObject.connect(self.action, SIGNAL("triggered()"), self.run)
 
@@ -69,42 +73,43 @@ class GestorHabitat:
         self.toolbar.removeAction(self.btadicionaracao)
         del self.toolbar
 
-    
     # Method that creates new accoes (RUN)
     def adicionaracao(self):
         # Define "acções" and "unidades de gestão" Layers from project
-        l_acao = QgsMapLayerRegistry.instance().mapLayer(u'acoes20130312143950563')
-        l_uni_ges = QgsMapLayerRegistry.instance().mapLayer(u'unidadesdegestao20130312143304288')
+        l_acao = QgsMapLayerRegistry.instance().mapLayer(u'acoes20140213101202661')
+        l_uni_ges= self.mc.currentLayer()
+        #l_uni_ges = QgsMapLayerRegistry.instance().mapLayer(u'unidadesdegestao20130312143304288')
         
         # Get layer default values from provider
         # (this avoids problems with unique keys)
         provider = l_acao.dataProvider()
         temp_feature = QgsFeature()
-        attributes = {}
+        attributes = []
 
         for j in l_acao.pendingAllAttributesList():
-            if not provider.defaultValue(j).isNull():
-                attributes[j] = provider.defaultValue(j)
+            if provider.defaultValue(j):
+                attributes.append(provider.defaultValue(j))
             else:
-                attributes[j] = None
+                attributes.append(None)
 
-        temp_feature.setAttributeMap(attributes)
+        temp_feature.setAttributes(attributes)
 
         # open feature form and waits for edits
-        if self.iface.openFeatureForm(l_acao, temp_feature):
+        if self.iface.openFeatureForm(l_acao, temp_feature, True):
             
             # start edit command to allow undo\redo
             l_acao.beginEditCommand("Add new actions")
             
-            new_attributes = temp_feature.attributeMap()
+            new_attributes = temp_feature.attributes()
             
             # replicate "acção" record for each
             # of the selected "Unidades de gestão"
-            uniges_ids = [feature.attributeMap()[1] for feature in l_uni_ges.selectedFeatures()]
+            uniges_ids = [feature.attributes()[1] for feature in l_uni_ges.selectedFeatures()]
+            print uniges_ids
 
             for uniges_id in uniges_ids:
-                new_attributes[1] = uniges_id
-                temp_feature.setAttributeMap(new_attributes)
+                new_attributes[3] = uniges_id
+                temp_feature.setAttributes(new_attributes)
                 new_feature = QgsFeature(temp_feature)
                 l_acao.addFeature( new_feature )
 

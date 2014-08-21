@@ -5,7 +5,7 @@
 #                             -------------------
 #        begin                : 2013-04-03
 #        copyright            : (C) 2013 by Alexandre Neto - Cascais Ambiente
-#        email                : alexandre.neto@cascaisambiente
+#        email                : alexandre.neto@cascaisambiente.pt
 # ***************************************************************************/
 # 
 #/***************************************************************************
@@ -23,19 +23,19 @@ PLUGIN_UPLOAD = $(CURDIR)/plugin_upload.py
 # Makefile for a PyQGIS plugin 
 
 # translation
-SOURCES = gestorhabitat.py ui_gestorhabitat.py __init__.py gestorhabitatdialog.py
+SOURCES = gestorhabitat.py __init__.py
 #TRANSLATIONS = i18n/gestorhabitat_en.ts
-TRANSLATIONS = 
+#TRANSLATIONS =
 
 # global
 
 PLUGINNAME = gestorhabitat
 
-PY_FILES = gestorhabitat.py gestorhabitatdialog.py __init__.py
+PY_FILES = gestorhabitat.py __init__.py
 
-EXTRAS = icon.png 
+EXTRAS = icon.png icons/icon.png icons/adicionaracoes.png
 
-UI_FILES = ui_gestorhabitat.py
+#UI_FILES = ui_gestorhabitat.py
 
 RESOURCE_FILES = resources_rc.py
 
@@ -113,5 +113,5 @@ clean:
 	rm $(UI_FILES) $(RESOURCE_FILES)
 
 # build documentation with sphinx
-doc: 
+doc:
 	cd help; make html

@@ -30,7 +30,7 @@ import resources_rc
 # from gestorhabitatdialog import GestorHabitatDialog
 
 # Import my plugin tools
-from gestorhabitattools import *
+# from gestorhabitattools import *
 
 class PghpTools:
 

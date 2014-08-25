@@ -29,13 +29,13 @@ SOURCES = pghptools.py __init__.py
 
 # global
 
-PLUGINNAME = gestorhabitat
+PLUGINNAME = pghptools
 
-PY_FILES = gestorhabitat.py __init__.py
+PY_FILES = pghptools.py __init__.py
 
 EXTRAS = icon.png icons/icon.png icons/adicionaracoes.png
 
-#UI_FILES = ui_gestorhabitat.py
+#UI_FILES = None
 
 RESOURCE_FILES = resources_rc.py
 

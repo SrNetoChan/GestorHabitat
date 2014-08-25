@@ -50,7 +50,7 @@ class PghpTools:
         self.toolbar.setObjectName("PGHPtoolbar")
         
         # Add actions to Toolbar
-        self.btadicionaracao = QAction(QIcon(":/plugins/GestorHabitat/icons/adicionaracoes.png"),
+        self.btadicionaracao = QAction(QIcon(":/plugins/GestorHabitat/icons/adicionaracoes.svg"),
                                        u"Adicionar ações", self.iface.mainWindow())
         self.toolbar.addActions([self.btadicionaracao])
         

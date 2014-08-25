@@ -11,7 +11,7 @@
 name=Ferramentas PGHP
 qgisMinimumVersion=2.2
 description=Ferramentas para plano de gestão de habitats e paisagem
-version=0.1
+version=0.1.2
 author=Alexandre Neto - Cascais Ambiente
 email=alexandre.neto@cascaisambiente
 
@@ -28,7 +28,7 @@ tags=
 homepage=
 tracker=
 repository=https://github.com/SrNetoChan/GestorHabitat.git
-icon=icon.png
+icon=icons/pghp_tools_icon.svg
 # experimental flag
 experimental=True
 

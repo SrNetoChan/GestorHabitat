@@ -1,7 +1,6 @@
 <RCC>
-    <qresource prefix="/plugins/GestorHabitat" >
-        <file>icon.png</file>
-        <file>icons/icon.png</file>
-        <file>icons/adicionaracoes.png</file>
+    <qresource prefix="/plugins/GestorHabitat">
+        <file>icons/pghp_tools_icon.svg</file>
+        <file>icons/adicionaracoes.svg</file>
     </qresource>
 </RCC>
